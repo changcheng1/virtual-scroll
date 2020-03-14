@@ -1,28 +1,53 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-03-11 16:00:29
+ * @LastEditTime: 2020-03-14 14:47:58
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /webNotes/Users/changcheng/Downloads/virtual-scroll/src/App.vue
+ -->
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <virtual-list
+      :size="size"
+      :remain="remain"
+      :items="items"
+      :variable="variable"
+    >
+      <item slot-scope="{ item }" :item="item"></item>
+    </virtual-list>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import virtualList from './components/virtual-list'
+import item from './components/item'
+var Mock = require('mockjs')
+let items = []
+let total = 200;
+for (var i = 0; i < total; i++) {
+  items.push({ id: i, value: Mock.Random.cparagraph(1, 4) })
+}
+console.log('items', items)
 export default {
   name: 'App',
+  data () {
+    return {
+      items,
+      size: 30,
+      remain: 8,
+      variable: true
+    }
+  },
   components: {
-    HelloWorld
+    virtualList,
+    item
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style lang="scss">
+* {
+  padding: 0;
+  margin: 0;
 }
 </style>
